@@ -17,7 +17,6 @@ This document defines the complete architecture for:
 ---
 
 # 🏗️ Architecture
-
 ```
 User clicks link (WhatsApp)
 → https://yourdomain.com/s/abc123
@@ -33,7 +32,6 @@ User clicks link (WhatsApp)
 # 🧠 How App Opens (Important)
 
 ### ✅ Ideal Case (No Browser)
-
 ```
 User taps link
 → OS checks domain ownership
@@ -42,7 +40,6 @@ User taps link
 ```
 
 ### ❗ Fallback Case (Browser Opens First)
-
 ```
 User taps link
 → Opens browser (WebView)
@@ -62,7 +59,6 @@ User taps link
 # 🌐 Deep Link Structure
 
 All links must follow:
-
 ```
 https://yourdomain.com/{path}?params
 ```
@@ -85,7 +81,6 @@ https://yourdomain.com/{path}?params
 ---
 
 ## 🔗 Example Links
-
 ```
 https://yourdomain.com/chat?programId=123
 https://yourdomain.com/goals?goalId=456
@@ -99,13 +94,11 @@ https://yourdomain.com/daily-content
 ## 1. Short Link Generation
 
 ### Endpoint
-
 ```
 POST /short-link
 ```
 
 ### Request
-
 ```json
 {
   "deep_link": "https://yourdomain.com/chat?programId=123"
@@ -113,7 +106,6 @@ POST /short-link
 ```
 
 ### Response
-
 ```json
 {
   "short_url": "https://yourdomain.com/s/abc123"
@@ -125,7 +117,6 @@ POST /short-link
 ## 2. Redirect Endpoint
 
 ### Endpoint
-
 ```
 GET /s/{code}
 ```
@@ -138,7 +129,6 @@ GET /s/{code}
 ---
 
 ## 3. Optional Resolve API
-
 ```
 GET /deeplink/{code}
 ```
@@ -146,7 +136,6 @@ GET /deeplink/{code}
 ---
 
 ## 🗄️ Database Schema
-
 ```json
 {
   "code": "abc123",
@@ -163,7 +152,6 @@ GET /deeplink/{code}
 ## 🤖 Android (App Links)
 
 ### File:
-
 ```
 https://yourdomain.com/.well-known/assetlinks.json
 ```
@@ -173,7 +161,6 @@ https://yourdomain.com/.well-known/assetlinks.json
 👉 Backend (FastAPI or server)
 
 ### Example:
-
 ```json
 [
   {
@@ -192,7 +179,6 @@ https://yourdomain.com/.well-known/assetlinks.json
 ## 🍎 iOS (Universal Links)
 
 ### File:
-
 ```
 https://yourdomain.com/.well-known/apple-app-site-association
 ```
@@ -215,7 +201,6 @@ https://yourdomain.com/.well-known/apple-app-site-association
 # 📱 Flutter Implementation
 
 ## 1. Install package
-
 ```yaml
 app_links: ^6.0.0
 ```
@@ -223,7 +208,6 @@ app_links: ^6.0.0
 ---
 
 ## 2. Listen for links
-
 ```dart
 final appLinks = AppLinks();
 
@@ -235,7 +219,6 @@ appLinks.uriLinkStream.listen((uri) {
 ---
 
 ## 3. Cold start
-
 ```dart
 final uri = await appLinks.getInitialAppLink();
 if (uri != null) handleDeepLink(uri);
@@ -244,7 +227,6 @@ if (uri != null) handleDeepLink(uri);
 ---
 
 ## 4. Routing
-
 ```dart
 void handleDeepLink(Uri uri) {
   switch (uri.path) {
